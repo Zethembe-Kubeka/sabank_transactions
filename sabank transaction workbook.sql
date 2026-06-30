@@ -12,4 +12,24 @@ SELECT
     SUM(CASE WHEN City             = '' OR City             IS NULL THEN 1 ELSE 0 END) AS missing_city
 FROM bank_transaction.sabank_transaction.sabank_transactions_dataset;
 
+-- Checking for inconsistent casing in Status column
+SELECT Status,
+    COUNT(*) AS Frequency
+FROM bank_transaction.sabank_transaction.sabank_transactions_dataset
+GROUP BY Status
+ORDER BY Frequency DESC;
 
+--Checking for incosistent casing in Account_type
+SELECT Account_type,
+    COUNT(*) AS Frequency
+FROM bank_transaction.sabank_transaction.sabank_transactions_dataset
+GROUP BY Account_type
+ORDER BY Frequency DESC;
+
+--Spot duplicates Transaction_IDs
+SELECT Transaction_ID,
+    COUNT(*) AS Occurrences
+FROM bank_transaction.sabank_transaction.sabank_transactions_dataset
+GROUP BY Transaction_ID
+HAVING COUNT(*) > 1
+ORDER BY Occurrences DESC;
